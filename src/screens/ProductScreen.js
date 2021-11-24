@@ -9,7 +9,7 @@ const ProductScreen = ({route, navigation}) => {
 
     const {state} = useContext(AuthContext)
 
-    console.log('route: ', route)
+    // console.log('route: ', route)
     const itemDetails = route.params.item
 
     useLayoutEffect(() => {

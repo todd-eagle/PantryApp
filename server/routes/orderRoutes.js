@@ -3,11 +3,11 @@ module.exports = {
         const db = req.app.get('db')
         const {user_id, prod_id, 
                quantity, title} = req.body
-
+        console.log('req.body: ', req.body)
         try {
-            await db.order_items.insert({user_id, prod_id, 
+            const response = await db.order_items.insert({user_id, prod_id, 
                                          quantity, title})
-            return res.status(200).send("insert successful")  
+            return res.status(200).send(response)  
         } catch (err) {
             return res.status(422).send(err)            
         }

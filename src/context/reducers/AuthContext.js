@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import authRoute from '../../api/route'
 import createContext from '../createContext'
 import {FORM_ERR, FORM} from '../../../server/consts/Messages'
-import {navigateResetRoot } from "../../navigationRef";
+import {navigateResetRoot } from "../../navigationRef"
 
 const AuthReducer = (state, action) => {
    // console.log("Action payload: ",action.payload)
@@ -102,8 +102,16 @@ const getResponseData = async (path, {email, password}, dispatch) => {
   return responseData
 }
 
+//////// Temporary additions /////////////
+const addOrder = (dispatch) => async (item, userId, number) => {
+ 
+  console.log('order: ', item)
+  // const response = await getResponse({item, number, user_id})
+  // dispatch({type: 'add_to_cart', cart_orders: {item}})
+}
+
 export const {Provider, Context} = createContext(
     AuthReducer,
-    {signin, signup, signout, tryLocalSignin, clearErrorMessage},
+    {signin, signup, signout, tryLocalSignin, clearErrorMessage, addOrder},
     {token: null, errorMessage: '', userId: null}
 )

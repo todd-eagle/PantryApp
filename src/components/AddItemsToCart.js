@@ -1,18 +1,20 @@
 import React, {useContext} from 'react'
 import { Text, View } from 'react-native'
 import useCount from '../hooks/useCount'
-import {Context as CartContext} from '../context/reducers/CartContext'
-
+import {Context as AuthContext} from '../context/reducers/AuthContext'
+import useOrders from '../hooks/useOrders'
 import AddDeleteQuantity from './AddDeleteQuantity'
 import AddToCartButton from './FormButton'
 
 const AddItemsToCart = ({item, userId}) => {
     
-    const {addOrder} = useContext(CartContext)
-    
+    const {addOrder} = useContext(AuthContext)
     const {number, add, subtract} = useCount(1)
+    const {addItem} = useOrders()
 
     console.log('userId: ', userId)
+
+
 
     return (
         <>
@@ -22,7 +24,7 @@ const AddItemsToCart = ({item, userId}) => {
             <View>
             <AddToCartButton 
                 buttonName = {'Add to Cart'} 
-                onPress = {()=> addOrder(item, number, userId)}    
+                onPress = {()=> addItem(item, userId, number)}    
             />
             </View>
         </>

@@ -5,7 +5,7 @@ import productRoute from '../api/route'
 const useProductList = () => {
 
     const [list, setList] = useState([])
-   
+    const prodIds = []
     const getList = async () => {
         try {
             if(list.length == 0){

@@ -1,4 +1,4 @@
-import createContext from '../createContext'
+import createContext from '../createCartContext'
 import cartRoute from '../../api/route'
 
 const CartReducer = (state, action) => {
@@ -14,9 +14,13 @@ const CartReducer = (state, action) => {
             return state
     }
 }
-const addOrder = (dispatch) => async (item, number, user_id) => {
-    const response = await getResponse(item, number, user_id)
-    dispatch({type: 'add_to_cart'})
+const addOrder = (dispatch) => async ({item}) => {
+    // const response = await getResponse({item, number, user_id})
+    // dispatch({type: 'add_to_cart', cart_orders: {item}})
+}
+
+const clearErrorMessage = (dispatch) => () => {
+    dispatch({ type: 'clear_error_message' })
 }
 
 const getResponse = async (path, {user_id}) => {
@@ -28,5 +32,5 @@ const getResponse = async (path, {user_id}) => {
 export const {Provider, Context} = createContext(
     CartReducer,
     {addOrder},
-    // {token: null, errorMessage: '', userId: null}
+    {errorMessage: ''}
 )
