@@ -14,6 +14,7 @@ module.exports = {
     },
     updateCart: async(req, res) => {
         const db = req.app.get('db')
+        const {quantity} = req.body
         try {
             const data = await db.order_items.update(req.params, req.body)
             return res.status(200).send(data)

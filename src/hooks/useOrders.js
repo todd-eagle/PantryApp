@@ -5,7 +5,8 @@ import orderRoute from '../api/route'
 const useOrders = () => {
 
     const {addOrder} = useContext(AuthContext)
-    const orderList = []
+    // const orderList = []
+    const [orderList, setOrderList] = useState ([])
     
     const addItem = (arrayObj, userId, number) => {
         
@@ -16,33 +17,69 @@ const useOrders = () => {
             quantity: number
         }
 
-        getResponse('/cart/',order)
+        getResponse('/cart/', order)
 
         return order
     }
 
     const getResponse = async (path, orderItem) => {
         const foundOrder = isInOrderList(orderItem)
+        console.log('FOUND ORDER!!: ', foundOrder )
         let response
-        
-        // foundOrder ? 
-        // response = await orderRoute.put(`${path}/${orderItem.user_id}`, orderItem) :
-        // await orderRoute.post(path, orderItem)
 
         if(foundOrder.length > 0) {
-            // response = await orderRoute.put(`${path}/${orderItem.user_id}`, orderItem) 
+
+            const totalQuantity = foundOrder[0].quantity + orderItem.quantity
+
+            foundOrder[0].quantity = totalQuantity
+            
+            // console.log('UPDATE PATH: ', path+foundOrder[0].id)
+            try {
+                response = await orderRoute.put(path+foundOrder[0].id, foundOrder[0])
+            } catch (err) {
+                console.log('Update error: ', err)
+            }
+            
+            // console.log("RESPONSE DATA: ", response.data)
+            
+            // console.log("RESPONSE DATA[0]: ", response.data[0])
+            updateOrderList(response.data)
         } else {
-            response = await orderRoute.post(path, orderItem)
 
-            console.log('response.data: ', response.data)
+            try {
+                response = await orderRoute.post(path, orderItem)
+            } catch (err) {
+                console.log('Post error: ', err)
+            }
+           
 
-            // orderList.push(response.data)
+            // console.log('response.data: ', response.data)
+
+            addToOrderList(response.data)
         }
     }
 
+    const addToOrderList = (order) => {
+            setOrderList(prev => [...prev, order])
+            console.log('addToOrderList orderList: ', orderList)
+
+    }
+
+    const updateOrderList = (order) => {
+        // console.log('UPDATED ORDER: ', order)
+        
+        ////////   need to use setOrderList here: /////////////////
+        orderList.find(orderItem => orderItem.prod_id === order[0].prod_id).quantity = order[0].quantity
+        
+        // console.log('Updated orderList: ', orderList)
+    }
+
     const isInOrderList = (order) => {
-        const foundId = orderList.filter(orderId=>orderId === order.id)
-        foundId.length > 0 ? foundId : orderList.push(order)
+        // console.log('isInOrderList orderList: ', orderList)
+        console.log('isInOrderList order: ', order)
+        const foundId = orderList.filter(orderId=>orderId.prod_id === order.prod_id)
+
+        // foundId.length > 0 ? foundId : orderList.push(order)
         console.log('foundId: ', foundId)
         return foundId
     }
