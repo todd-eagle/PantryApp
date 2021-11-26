@@ -5,7 +5,6 @@ import orderRoute from '../api/route'
 const useOrders = () => {
 
     const {addOrder} = useContext(AuthContext)
-    // const orderList = []
     const [orderList, setOrderList] = useState ([])
     
     const addItem = (arrayObj, userId, number) => {
@@ -24,7 +23,6 @@ const useOrders = () => {
 
     const getResponse = async (path, orderItem) => {
         const foundOrder = isInOrderList(orderItem)
-        console.log('FOUND ORDER!!: ', foundOrder )
         let response
 
         if(foundOrder.length > 0) {
@@ -33,16 +31,12 @@ const useOrders = () => {
 
             foundOrder[0].quantity = totalQuantity
             
-            // console.log('UPDATE PATH: ', path+foundOrder[0].id)
             try {
                 response = await orderRoute.put(path+foundOrder[0].id, foundOrder[0])
             } catch (err) {
                 console.log('Update error: ', err)
             }
-            
-            // console.log("RESPONSE DATA: ", response.data)
-            
-            // console.log("RESPONSE DATA[0]: ", response.data[0])
+
             updateOrderList(response.data)
         } else {
 
@@ -51,10 +45,6 @@ const useOrders = () => {
             } catch (err) {
                 console.log('Post error: ', err)
             }
-           
-
-            // console.log('response.data: ', response.data)
-
             addToOrderList(response.data)
         }
     }
@@ -66,21 +56,14 @@ const useOrders = () => {
     }
 
     const updateOrderList = (order) => {
-        // console.log('UPDATED ORDER: ', order)
-        
-        ////////   need to use setOrderList here: /////////////////
-        orderList.find(orderItem => orderItem.prod_id === order[0].prod_id).quantity = order[0].quantity
-        
-        // console.log('Updated orderList: ', orderList)
+        // orderList.find(orderItem => orderItem.prod_id === order[0].prod_id).quantity = order[0].quantity
+        const quantityToModify = orderList.find(orderItem => orderItem.prod_id === order[0].prod_id)
+         setOrderList(prev => [...prev, quantityToModify.quantity = order[0].quantity])
+
     }
 
     const isInOrderList = (order) => {
-        // console.log('isInOrderList orderList: ', orderList)
-        console.log('isInOrderList order: ', order)
         const foundId = orderList.filter(orderId=>orderId.prod_id === order.prod_id)
-
-        // foundId.length > 0 ? foundId : orderList.push(order)
-        console.log('foundId: ', foundId)
         return foundId
     }
 
