@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -8,12 +7,12 @@ import {Provider as AuthProvider} from './src/context/reducers/AuthContext'
 import {navigationRef} from './src/navigationRef'
 
 //screens
-
 import AccountScreen from './src/screens/AccountScreen'
 import ProductScreen from './src/screens/ProductScreen'
 import StoreScreen from './src/screens/StoreScreen'
 import SignupScreen from './src/screens/SignupScreen'
 import SigninScreen from './src/screens/SigninScreen'
+import CartScreen from './src/screens/CartScreen'
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
 
 
@@ -24,6 +23,7 @@ const App = () => {
   const StoreStack = createStackNavigator()
   const AccountStack = createStackNavigator()
   const ProductStack = createStackNavigator()
+  const CartStack = createStackNavigator()  
   const Stack = createStackNavigator()
  
   const AuthStackScreens = () =>  (
@@ -53,10 +53,17 @@ const App = () => {
       </ProductStack.Navigator>
     )
 
+  const CartStackScreen = () =>  (
+      <CartStack.Navigator>
+        <CartStack.Screen name = 'Cart' component = {CartScreen}/>
+      </CartStack.Navigator>
+    )
+
   const TabScreens = () => (
     <Tabs.Navigator>
       <Tabs.Screen name = 'Store' component = {StoreStackScreen}/>
       <Tabs.Screen name = 'Account' component = {AccountStackScreen}/>
+      <Tabs.Screen name = 'Cart' component = {CartStackScreen}/>
       <Tabs.Screen name = 'Product' component = {ProductStackScreen} options = {{ tabBarButton: () => null }}/>
     </Tabs.Navigator>
   )

@@ -16,7 +16,10 @@ const AuthReducer = (state, action) => {
         case 'clear_error_message':
             return { ...state, errorMessage: '' }
         case 'add_userid':
-            return {...state, userId: action.payload}        
+            return {...state, userId: action.payload} 
+        ////// temporary addition ///////      
+        case 'add_to_cart':
+          return {...state, cartOrders: action.payload}    
         default:
             return state
     }
@@ -103,15 +106,15 @@ const getResponseData = async (path, {email, password}, dispatch) => {
 }
 
 //////// Temporary additions /////////////
-const addOrder = (dispatch) => async (item, userId, number) => {
+const addOrder = (dispatch) => async (item) => {
  
-  console.log('order: ', item)
+  // console.log('order: ', item)
   // const response = await getResponse({item, number, user_id})
-  // dispatch({type: 'add_to_cart', cart_orders: {item}})
+  dispatch({type: 'add_to_cart', payload: item})
 }
 
 export const {Provider, Context} = createContext(
     AuthReducer,
     {signin, signup, signout, tryLocalSignin, clearErrorMessage, addOrder},
-    {token: null, errorMessage: '', userId: null}
+    {token: null, errorMessage: '', userId: null, cartOrders: null}
 )

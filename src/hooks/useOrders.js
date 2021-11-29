@@ -1,12 +1,16 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import orderRoute from '../api/route'
  
 const useOrders = () => {
-
     const {addOrder} = useContext(AuthContext)
     const [orderList, setOrderList] = useState ([])
     
+
+    useEffect(() => {
+        orderList.length > 0 ? addOrder(orderList) : null
+    }, [orderList])
+
     const addItem = (arrayObj, userId, number) => {
         
         const order = {
@@ -33,36 +37,39 @@ const useOrders = () => {
             
             try {
                 response = await orderRoute.put(path+foundOrder[0].id, foundOrder[0])
+                updateOrderList(response.data)
             } catch (err) {
                 console.log('Update error: ', err)
             }
 
-            updateOrderList(response.data)
         } else {
 
             try {
                 response = await orderRoute.post(path, orderItem)
+                addToOrderList(response.data)
+
             } catch (err) {
                 console.log('Post error: ', err)
             }
-            addToOrderList(response.data)
         }
     }
 
     const addToOrderList = (order) => {
-            setOrderList(prev => [...prev, order])
-            console.log('addToOrderList orderList: ', orderList)
+        setOrderList(prev => [...prev, order])
+        console.log('addToOrderList orderList: ', orderList)
+        // addOrder(orderList)
 
     }
 
     const updateOrderList = (order) => {
-        // orderList.find(orderItem => orderItem.prod_id === order[0].prod_id).quantity = order[0].quantity
-        const quantityToModify = orderList.find(orderItem => orderItem.prod_id === order[0].prod_id)
-         setOrderList(prev => [...prev, quantityToModify.quantity = order[0].quantity])
+        orderList.find(orderItem => orderItem.prod_id === order[0].prod_id).quantity = order[0].quantity
+        const modifiedList = [...orderList]
+        setOrderList(modifiedList)
 
     }
 
     const isInOrderList = (order) => {
+        // console.log('isInOrderList order: ', order)
         const foundId = orderList.filter(orderId=>orderId.prod_id === order.prod_id)
         return foundId
     }
