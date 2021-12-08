@@ -35,4 +35,4 @@ app.get('/products/:term', producthRoutes.getProductsBy)
 
 app.post('/cart/', orderRoutes.postToCart)
 app.put('/cart/:id', orderRoutes.updateCart)
-app.delete('/cart/:user_id', orderRoutes.deleteFromCart)
+app.delete('/cart/:id', orderRoutes.deleteFromCart)

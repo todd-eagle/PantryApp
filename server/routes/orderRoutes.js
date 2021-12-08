@@ -1,12 +1,8 @@
 module.exports = {
     postToCart: async(req, res) => {
         const db = req.app.get('db')
-        const {user_id, prod_id, 
-               quantity, title} = req.body
-        console.log('req.body: ', req.body)
         try {
-            const response = await db.order_items.insert({user_id, prod_id, 
-                                         quantity, title})
+            const response = await db.order_items.insert(req.body)
             return res.status(200).send(response)  
         } catch (err) {
             return res.status(422).send(err)            
@@ -24,10 +20,13 @@ module.exports = {
     },
     deleteFromCart: async(req, res) => {
         const db = req.app.get('db')
+        console.log('req.params: ', req.params)
+
         try {
             await db.order_items.destroy(req.params)
-            return res.status.status(200).send('product deleted')
+            return res.status(200).send('product deleted')
         } catch (err) {
+            console.log('deleteFromCart: ', err)
             return res.status(422).send(err)
         }
     }

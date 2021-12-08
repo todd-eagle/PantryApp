@@ -1,14 +1,18 @@
-import React, {useContext,useEffect} from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import React, {useContext, useEffect} from 'react'
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
+import RemoveFromCartButton from '../components/FormButton'
+import useOrders from '../hooks/useOrders'
 
 
 const CartScreen = () => {
-    const {state} = useContext(AuthContext)
-
+    const {state, addOrder} = useContext(AuthContext)
     const orders = state.cartOrders
+    const {removeOrder, orderList, isRemoved} = useOrders(orders)
 
-    const test = JSON.stringify(orders)
+    useEffect(() => {
+        isRemoved ? addOrder(orderList) : null
+    }, [orderList, isRemoved])
 
     return (
         <View style={styles.viewStyle}>
@@ -18,10 +22,17 @@ const CartScreen = () => {
                  keyExtractor = {orders => orders.id.toString()}
                  renderItem = {({item}) => {
                      return (
-                        <Text>
-                            {item.title}
-                            {item.quantity}
-                        </Text>
+                        <View>
+                            <Text>
+                                <Image style = {styles.image} source= {{uri: item.image_url}} />
+                                {item.title}
+                                {item.quantity}
+                            </Text>
+                            <RemoveFromCartButton 
+                                buttonName = {'Remove'}
+                                onPress = {()=>removeOrder(item.id, orders)}
+                            />
+                        </View>  
                      )
                  }}
             />
@@ -34,6 +45,13 @@ const styles = StyleSheet.create ({
         // borderWidth: 4,
         // borderColor: 'red',
         // height: 255
+    },
+    image: {
+        flex: 1,
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+        alignItems: 'center'
     }
 })
 
