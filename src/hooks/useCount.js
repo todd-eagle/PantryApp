@@ -1,8 +1,14 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-const useCount = (num, maxNum = 2) => {
+const useCount = (num, maxNum = 4) => {
+
+  useEffect(() => {
+   setNumber(num)
+  }, [num])
 
   const [number, setNumber] = useState(num)
+
+  // console.log('useCount Number: ', number)
 
   const add = n => number < maxNum ? setNumber(number + n) : number
 

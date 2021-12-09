@@ -7,7 +7,7 @@ const useOrders = (items) => {
 
     useEffect(() => {
         items ? setOrderList(items) : null
-        console.log('useEffect OrderList: ', orderList)
+        // console.log('useEffect OrderList: ', orderList)
     }, [items])
 
     const addItem = (arrayObj, userId, number) => {   

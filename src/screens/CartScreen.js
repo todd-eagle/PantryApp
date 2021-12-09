@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import RemoveFromCartButton from '../components/FormButton'
 import useOrders from '../hooks/useOrders'
-
+import UpdateQuantity from '../components/UpdateQuantity'
 
 const CartScreen = () => {
     const {state, addOrder} = useContext(AuthContext)
     const orders = state.cartOrders
     const {removeOrder, orderList, isRemoved} = useOrders(orders)
+    
 
     useEffect(() => {
         isRemoved ? addOrder(orderList) : null
@@ -26,7 +27,8 @@ const CartScreen = () => {
                             <Text>
                                 <Image style = {styles.image} source= {{uri: item.image_url}} />
                                 {item.title}
-                                {item.quantity}
+                                {item.quantity} 
+                                <UpdateQuantity quantity = {item.quantity} />
                             </Text>
                             <RemoveFromCartButton 
                                 buttonName = {'Remove'}

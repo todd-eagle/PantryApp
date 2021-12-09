@@ -19,7 +19,7 @@ const AuthReducer = (state, action) => {
             return {...state, userId: action.payload} 
         ////// temporary addition ///////      
         case 'add_to_cart':
-          console.log('add_to_cart: ', action.payload)
+          // console.log('add_to_cart: ', action.payload)
           return {...state, cartOrders: action.payload}    
         default:
             return state
