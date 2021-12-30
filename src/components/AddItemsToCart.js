@@ -1,5 +1,6 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useCallback} from 'react'
 import { Text, View } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import useCount from '../hooks/useCount'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import useOrders from '../hooks/useOrders'
@@ -9,16 +10,27 @@ import AddToCartButton from './FormButton'
 const AddItemsToCart = ({item, userId}) => {
     
     const {state, addOrder} = useContext(AuthContext)
-    const {number, add, subtract} = useCount(1)
+    const {number, add, subtract, reset} = useCount(1)
     const {addItem, orderList} = useOrders(state.cartOrders)
-// z
+
     console.log('userId: ', userId)
+
+    useFocusEffect(
+        useCallback(
+            () => {   
+              return () => {
+                //resets item quantity to 1 on exit screen  
+                reset()
+              }
+            },
+            [])
+    )   
 
     useEffect(() => {
         console.log('Returned List: ', orderList)
        addOrder(orderList)
         console.log('state: ', state)
-    }, [orderList])
+    }, [orderList, number])
 
     return (
         <>

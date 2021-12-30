@@ -114,6 +114,10 @@ const addOrder = (dispatch) => async (item) => {
   dispatch({type: 'add_to_cart', payload: item})
 }
 
+const revertToOne = (dispatch) => async () => {
+  
+}
+
 export const {Provider, Context} = createContext(
     AuthReducer,
     {signin, signup, signout, tryLocalSignin, clearErrorMessage, addOrder},
