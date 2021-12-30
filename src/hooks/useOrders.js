@@ -15,10 +15,12 @@ const useOrders = (items) => {
             user_id: userId,
             prod_id: arrayObj.prod_id,
             title: arrayObj.title,
+            description: arrayObj.description,
             quantity: number,
             image_url: arrayObj.image_url
         }
         getResponse('/cart/', order)
+
 
         return order
     }

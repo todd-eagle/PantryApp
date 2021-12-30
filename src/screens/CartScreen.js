@@ -12,13 +12,13 @@ const CartScreen = ({navigation}) => {
     const {state, addOrder} = useContext(AuthContext)
     const orders = state.cartOrders
     const {removeOrder, orderList, isRemoved} = useOrders(orders)
-    
-//    console.log('Navigation: ', navigation)
 
+    console.log('Orders: ', orders)
+    
 useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        navigation.navigate('Store'); 
+        navigation.navigate('Store')
         return true // disables normal back button behaviour!  Won't work if not here!
       }
       BackHandler.addEventListener('hardwareBackPress', onBackPress); 
@@ -41,7 +41,7 @@ useFocusEffect(
                     return (
                         
                         <View>
-                           <TouchableOpacity onPress={()=>alert('stub')}>    
+                           <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', params:{ screen: 'Product', params:{item,  title: item.title, description: item.description}}})}>    
                             <Text>
                                 <Image style = {styles.image} source= {{uri: item.image_url}} />
                                 {item.title}
