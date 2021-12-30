@@ -14,9 +14,7 @@ const useCount = (num, maxNum = 4) => {
 
   const subtract = n => number > 1 ? setNumber(number - n) : number
 
-  //temp add///
-
-  const reset = () => {setNumber(1); console.log('reset activated')}
+  const reset = () => setNumber(1)
 
   return {number, add, subtract, reset}
 }

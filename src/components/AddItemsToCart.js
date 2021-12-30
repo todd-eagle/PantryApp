@@ -16,14 +16,12 @@ const AddItemsToCart = ({item, userId}) => {
     console.log('userId: ', userId)
 
     useFocusEffect(
-        useCallback(
-            () => {   
+        useCallback(() => {   
               return () => {
                 //resets item quantity to 1 on exit screen  
                 reset()
               }
-            },
-            [])
+            },[])
     )   
 
     useEffect(() => {

@@ -19,7 +19,7 @@ const ProductResults = ({filter, navigation}) => {
                 keyExtractor = {products => `${products.prod_id}`}
                 renderItem = {({item}) => {
                     return(
-                        <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', params:{ screen: 'Product', params:{item,  title: item.title, quantity: true}}})}>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', params:{ screen: 'Product', params:{item,  title: item.title}}})}>
                             <View style={styles.productsContainer}>    
                                 <View style={styles.imageContainer}> 
                                     <Image style = {styles.image} source= {{uri: item.image_url}} />        
