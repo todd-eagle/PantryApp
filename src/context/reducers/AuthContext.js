@@ -108,14 +108,7 @@ const getResponseData = async (path, {email, password}, dispatch) => {
 
 //////// Temporary additions /////////////
 const addOrder = (dispatch) => async (item) => {
- 
-  // console.log('order: ', item)
-  // const response = await getResponse({item, number, user_id})
   dispatch({type: 'add_to_cart', payload: item})
-}
-
-const revertToOne = (dispatch) => async () => {
-  
 }
 
 export const {Provider, Context} = createContext(

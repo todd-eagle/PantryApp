@@ -41,14 +41,17 @@ useFocusEffect(
                     return (
                         
                         <View>
-                           <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', params:{ screen: 'Product', params:{item,  title: item.title, description: item.description}}})}>    
-                            <Text>
-                                <Image style = {styles.image} source= {{uri: item.image_url}} />
-                                {item.title}
-                                {item.quantity} 
-                                <UpdateQuantity quantity = {item.quantity} />
-                            </Text>
-                         </TouchableOpacity>  
+                           <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', 
+                                                                              params:{ screen: 'Product', 
+                                                                              params:{item,  title: item.title, description: item.description}}})}>    
+                                <Text>
+                                    <Image style = {styles.image} source= {{uri: item.image_url}} />
+                                    {item.title}
+                                    {item.quantity} 
+                                </Text>
+                            </TouchableOpacity>  
+                            <UpdateQuantity quantity = {item.quantity} item = {item} 
+                                                userId = {item.user_id} orders = {orders} />                      
                             <RemoveFromCartButton 
                                 buttonName = {'Remove'}
                                 onPress = {()=>removeOrder(item.id, orders)}

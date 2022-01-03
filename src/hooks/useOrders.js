@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import orderRoute from '../api/route'
  
-const useOrders = (items) => {
+const useOrders = (items = null) => {
     const [orderList, setOrderList] = useState ([])
     const [isRemoved, setIsRemoved] = useState(false)
 
@@ -10,7 +10,7 @@ const useOrders = (items) => {
         // console.log('useEffect OrderList: ', orderList)
     }, [items])
 
-    const addItem = (arrayObj, userId, number) => {   
+    const addItem = async(arrayObj, userId, number, isModified = false) => {   
         const order = {
             user_id: userId,
             prod_id: arrayObj.prod_id,
@@ -19,16 +19,9 @@ const useOrders = (items) => {
             quantity: number,
             image_url: arrayObj.image_url
         }
-        getResponse('/cart/', order)
-
+        await getResponse('/cart/', order, isModified)
 
         return order
-    }
-
-    const forceRender = (list) => {
-        console.log('forceRender list: ', list)
-        return () => setOrderList(orderList => orderList = [...list])
-
     }
 
     const removeOrder = async(orderId, orders) => {
@@ -42,12 +35,17 @@ const useOrders = (items) => {
         }
     }
 
-    const getResponse = async (path, orderItem, remove = false) => {
+    //const getResponse = async (path, orderItem, remove = false) => {
+
+    const getResponse = async (path, orderItem, isModified) => {
         const foundOrder = isInOrderList(orderItem)
         let response = null
 
-        if(foundOrder.length > 0 && remove === false) {
-            const totalQuantity = foundOrder[0].quantity + orderItem.quantity
+        //if(foundOrder.length > 0 && remove === false)
+
+        if(foundOrder.length > 0) {
+            let totalQuantity = foundOrder[0].quantity + orderItem.quantity
+            isModified ? totalQuantity =  orderItem.quantity : totalQuantity
             foundOrder[0].quantity = totalQuantity
             
             try {

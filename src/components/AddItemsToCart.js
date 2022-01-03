@@ -38,7 +38,7 @@ const AddItemsToCart = ({item, userId}) => {
             <View>
             <AddToCartButton 
                 buttonName = {'Add to Cart'} 
-                onPress = {()=> addItem(item, userId, number)}    
+                onPress = {()=> addItem(item, userId, number, isModified = false)}    
             />
             </View>
         </>
