@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import {Text, View} from 'react-native'
-import AuthView from '../components/BaseForm'
-import FormButton from '../components/FormButton'
+import AuthView from './BaseForm'
+import FormButton from './FormButton'
 import useValidation from '../hooks/useFormValidation'
 
 
 const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
+
+    //////// Make seperate hook or functional component ///////
 
     const [values, setValues] = useState({})
     const [formValid, setFormValid] = useState(false)
@@ -19,6 +21,9 @@ const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
         console.log(values)
         onSubmit( {email, password})
     }
+
+    //////////////////////////////////////////////////////////////
+
 
     const inputInfo = 
         [

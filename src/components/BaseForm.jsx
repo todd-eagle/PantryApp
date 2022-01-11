@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, View, Text, TextInput, FlatList } from 'react-native'
-
 const BaseForm = (props) => {
     const {inputInfo, dropDownInfo, errors, serverErrors, autoCapitalize, autoCorrect} = props
     let {onChangeInputs} = props    

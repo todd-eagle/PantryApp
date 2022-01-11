@@ -10,7 +10,7 @@ module.exports = {
     signup: async(req, res) => {
         const db = req.app.get('db')
         const {user_name, email, password} = req.body
-        // console.log('authRoute file: ', email, password)
+         console.log('authRoute file: ', email, password)
         try{
             const hash = bcryptjs.hashSync(password, bcryptjs.genSaltSync(15))
             const insertUser = await db.accounts.insert({user_name, email, password: hash})
@@ -37,7 +37,7 @@ module.exports = {
         }else if (bcryptjs.compareSync(password, user.password)){
             const token = jwt.sign(user.user_id, JWT_SECRET_KEY)
             const user_id = user.user_id
-            // console.log('AuthRoute Token: ', token)
+            console.log('AuthRoute Token: ', token)
             res.send({ token, user_id })
         } else {
             return res.status(401).send(SIGNIN.authMsg)

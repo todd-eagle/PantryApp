@@ -5,6 +5,7 @@ import { useFocusEffect } from '@react-navigation/native'
 
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import RemoveFromCartButton from '../components/FormButton'
+import CheckOutButton from '../components/FormButton'
 import useOrders from '../hooks/useOrders'
 import UpdateQuantity from '../components/UpdateQuantity'
 
@@ -39,29 +40,35 @@ useFocusEffect(
                  keyExtractor = {orders => orders.id.toString()}
                  renderItem = {({item}) => {
                     return (
-                        
                         <View>
-                           <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', 
-                                                                              params:{ screen: 'Product', 
-                                                                              params:{item,  title: item.title, description: item.description}}})}>    
-                                <Text>
-                                    <Image style = {styles.image} source= {{uri: item.image_url}} />
-                                    {item.title}
-                                    {item.quantity} 
-                                </Text>
-                            </TouchableOpacity>  
-                            <UpdateQuantity quantity = {item.quantity} item = {item} 
-                                                userId = {item.user_id} orders = {orders} />                      
-                            <RemoveFromCartButton 
-                                buttonName = {'Remove'}
-                                onPress = {()=>removeOrder(item.id, orders)}
-                            />
-                        </View>
-                         
+                            <View>
+                                <TouchableOpacity onPress={()=>navigation.navigate('Tabs', { screen: 'Product', 
+                                                                                    params:{ screen: 'Product', 
+                                                                                    params:{item,  title: item.title, description: item.description}}})}>    
+                                        <Text>
+                                            <Image style = {styles.image} source= {{uri: item.image_url}} />
+                                            {item.title}
+                                            {item.quantity} 
+                                        </Text>
+                                </TouchableOpacity>  
+                                <UpdateQuantity quantity = {item.quantity} item = {item} 
+                                                        userId = {item.user_id} orders = {orders} />                      
+                                <RemoveFromCartButton 
+                                    buttonName = {'Remove'}
+                                    onPress = {()=>removeOrder(item.id, orders)}
+                                    
+                                />     
+                            </View>
+                           
+                     </View>    
                      )
                  }}
             />
-           
+                    <CheckOutButton
+                        buttonName = {'Check out'}
+                        onPress={()=>{navigation.navigate('Tabs', { screen:'Address'})}}
+                    />
+    
         </View>
     )
 }

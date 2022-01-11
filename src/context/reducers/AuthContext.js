@@ -62,6 +62,7 @@ const signin = (dispatch) => async ({ email, password }) => {
 const signup = (dispatch) => async({email, password}) => {
    try {
       const response = await getResponseData('/signin', {email, password}, dispatch)
+      console.log('Response: ', response)
       dispatch({type: 'signin', payload: response.data.token})
       navigateTo('Tabs','Store')
    } catch (err) {
