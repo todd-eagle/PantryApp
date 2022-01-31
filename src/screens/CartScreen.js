@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useCallback} from 'react'
 import { View, Text, StyleSheet, FlatList, Image, BackHandler } from 'react-native'
 import {TouchableOpacity } from 'react-native-gesture-handler'
 import { useFocusEffect } from '@react-navigation/native'
-
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import RemoveFromCartButton from '../components/FormButton'
 import CheckOutButton from '../components/FormButton'
@@ -14,7 +13,7 @@ const CartScreen = ({navigation}) => {
     const orders = state.cartOrders
     const {removeOrder, orderList, isRemoved} = useOrders(orders)
 
-    console.log('Orders: ', orders)
+   // console.log('Orders: ', orders)
     
 useFocusEffect(
     useCallback(() => {

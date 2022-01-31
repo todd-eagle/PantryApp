@@ -47,9 +47,12 @@ const useOrders = (items = null) => {
             let totalQuantity = foundOrder[0].quantity + orderItem.quantity
             isModified ? totalQuantity =  orderItem.quantity : totalQuantity
             foundOrder[0].quantity = totalQuantity
+
+            console.log("TOTAL QANTITY: ", totalQuantity)
             
             try {
                 response = await orderRoute.put(path+foundOrder[0].id, foundOrder[0])
+                // console.log('update order list:', response.data)
                 updateOrderList(response.data)
             } catch (err) {
                 console.log('Update error: ', err)

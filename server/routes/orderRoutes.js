@@ -20,13 +20,13 @@ module.exports = {
     },
     deleteFromCart: async(req, res) => {
         const db = req.app.get('db')
-        console.log('req.params: ', req.params)
+        // console.log('req.params: ', req.params)
 
         try {
             await db.order_items.destroy(req.params)
             return res.status(200).send('product deleted')
         } catch (err) {
-            console.log('deleteFromCart: ', err)
+            // console.log('deleteFromCart: ', err)
             return res.status(422).send(err)
         }
     }

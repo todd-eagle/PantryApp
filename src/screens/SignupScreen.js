@@ -7,7 +7,7 @@ import SignUpForm from '../components/AuthForm'
 const SignupScreen = () => {
     const {state, signup} = useContext(AuthContext)
     
-    console.log('signup: ', signup)
+    // console.log('signup: ', signup)
     return (
         <>
         <SignUpForm 

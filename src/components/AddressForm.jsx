@@ -18,7 +18,7 @@ const AddressForm = ({headerText, buttonName, errorMessage, onSubmit}) => {
 
     const Submit = () => {
         // const {email, password} = values
-        console.log(values)
+        // console.log(values)
         // onSubmit( {email, password})
     }
 

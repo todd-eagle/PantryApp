@@ -20,13 +20,16 @@ const UpdateQuantity = ({quantity, item, userId, orders}) => {
     }, [quantity, number])
 
     const writeToDb = (num) => {
+        console.log('Is Modified = ', isModified)
         if (isModified){
+            console.log('Try-Catch Is Modified = ', isModified)
             try {
                 addItem(item, userId, num, isModified)
             } catch (err) {
                 console.log('There was an error. ', err)
             }
         }
+        setIsModified(false)
     } 
 
    

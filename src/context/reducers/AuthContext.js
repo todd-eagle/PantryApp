@@ -62,7 +62,7 @@ const signin = (dispatch) => async ({ email, password }) => {
 const signup = (dispatch) => async({email, password}) => {
    try {
       const response = await getResponseData('/signin', {email, password}, dispatch)
-      console.log('Response: ', response)
+      // console.log('Response: ', response)
       dispatch({type: 'signin', payload: response.data.token})
       navigateTo('Tabs','Store')
    } catch (err) {
@@ -90,12 +90,12 @@ const navigateTo = (navigator, screen) => {
 const getResponse = async (path, {email, password}) => {
     const response = await authRoute.post(path, {email, password})
     await AsyncStorage.setItem('token', response.data.token)
-    console.log('AsyncStorage.setItem to :', response.data.token)
+    // console.log('AsyncStorage.setItem to :', response.data.token)
     return response
 }
 
 const dispatchUserId  =  (dispatch, user_id) => {
-  console.log('Dispatched UserId is: ', user_id)
+  // console.log('Dispatched UserId is: ', user_id)
   dispatch({type: 'add_userid', payload: user_id})
   
 }

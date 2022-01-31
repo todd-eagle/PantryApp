@@ -13,7 +13,7 @@ const AddItemsToCart = ({item, userId}) => {
     const {number, add, subtract, reset} = useCount(1)
     const {addItem, orderList} = useOrders(state.cartOrders)
 
-    console.log('userId: ', userId)
+    // console.log('userId: ', userId)
 
     useFocusEffect(
         useCallback(() => {   
@@ -25,9 +25,9 @@ const AddItemsToCart = ({item, userId}) => {
     )   
 
     useEffect(() => {
-        console.log('Returned List: ', orderList)
+        // console.log('Returned List: ', orderList)
        addOrder(orderList)
-        console.log('state: ', state)
+        // console.log('state: ', state)
     }, [orderList, number])
 
     return (

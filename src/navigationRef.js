@@ -3,7 +3,7 @@ import React from 'react'
 export const navigationRef = React.createRef();
 
 export const navigate = (routeName, params) => {
-  console.log('routeName: ', routeName, 'params: ', params)
+  // console.log('routeName: ', routeName, 'params: ', params)
   navigationRef.current && navigationRef.current.navigate(routeName, params)
   
 }
