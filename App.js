@@ -15,6 +15,7 @@ import SigninScreen from './src/screens/SigninScreen'
 import CartScreen from './src/screens/CartScreen'
 import AddressScreen from './src/screens/AddressScreen'
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
+import PaymentScreen from './src/screens/PaymentScreen'
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
   const ProductStack = createStackNavigator()
   const CartStack = createStackNavigator()
   const AddressStack = createStackNavigator() 
+  const PaymentStack = createStackNavigator()
   const Stack = createStackNavigator()
  
   const AuthStackScreens = () =>  (
@@ -67,6 +69,12 @@ const App = () => {
       </CartStack.Navigator>
     )
 
+  const PaymentStackScreen = () => (
+      <PaymentStack.Navigator>
+        <PaymentStack.Screen name = 'Payment' component = {PaymentScreen}/>
+      </PaymentStack.Navigator>
+  )  
+
   const TabScreens = () => (
     <Tabs.Navigator>
       <Tabs.Screen name = 'Store' component = {StoreStackScreen}/>
@@ -74,6 +82,7 @@ const App = () => {
       <Tabs.Screen name = 'Cart' component = {CartStackScreen}/>
       <Tabs.Screen name = 'Product' component = {ProductStackScreen} options = {{ tabBarButton: () => null }}/>
       <Tabs.Screen name = 'Address' component = {AddressStackScreen} options = {{ tabBarButton: () => null }}/>
+      <Tabs.Screen name = 'Payment' component = {PaymentStackScreen} options = {{ tabBarButton: () => null }}/>
     </Tabs.Navigator>
   )
 

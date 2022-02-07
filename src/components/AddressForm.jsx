@@ -1,32 +1,35 @@
-import React, {useState, useEffect, useCallback} from 'react'
-import {  View, Text } from 'react-native'
+import React, {useState, useEffect, useCallback, useContext} from 'react'
+import { View, Text } from 'react-native'
 import AddressView from './BaseForm'
 import FormButton from './FormButton'
 import useValidation from '../hooks/useFormValidation'
-
+import useAccounts from '../hooks/useAccounts'
+import {Context as AuthContext} from '../context/reducers/AuthContext'
 
 const AddressForm = ({headerText, buttonName, errorMessage, onSubmit}) => {
     
+    const {state} = useContext(AuthContext)
     //////// Make seperate hook or functional component ///////
     
     const [values, setValues] = useState({})
     const [formValid, setFormValid] = useState(false)
+    const {insertAddress} = useAccounts()
 
     const onChangeInputs = (item, value) => {
         setValues(values => ({ ...values, [item] : value.trim()}))
     }
 
     const Submit = () => {
-        // const {email, password} = values
-        // console.log(values)
-        // onSubmit( {email, password})
+        console.log('Submit values: ', values)
+        insertAddress('/account/', state.userId, values)
+        
     }
 
 //////////////////////////////////////////////////////////////
 
 const inputInfo = 
-[   {label: 'First Name:', id: 'first_name',  required: true, value: values.first_name},
-    {label: 'Last Name:', id: 'last_name',  required: true, value: values.last_name},
+[   {label: 'First Name:', id: 'first_name',  required: true, value: values.first_name, chars: 'letter'},
+    {label: 'Last Name:', id: 'last_name',  required: true, value: values.last_name, chars: 'letter'},
     {label: 'Address:', id: 'address', placeholder: 'ex. 123 Stapleton Ave.',  required: true, value: values.address},
     {label: 'City:', id: 'city', placeholder: 'ex. Newberry',  required: true, value: values.city},
     {label: 'State:', id: 'state',  required: true, value: values.state},

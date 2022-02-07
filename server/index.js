@@ -4,6 +4,7 @@ const massive = require('massive')
 const authRoutes = require('./routes/authRoutes')
 const producthRoutes = require('./routes/productRoutes')
 const orderRoutes = require('./routes/orderRoutes')
+const accountRoutes = require('./routes/accountRoutes')
 
 const requireAuth = require('./middleware/requireAuth')
 
@@ -36,3 +37,7 @@ app.get('/products/:term', producthRoutes.getProductsBy)
 app.post('/cart/', orderRoutes.postToCart)
 app.put('/cart/:id', orderRoutes.updateCart)
 app.delete('/cart/:id', orderRoutes.deleteFromCart)
+
+app.post('/account', accountRoutes.insertAddress)
+app.put('/account/:user_id', accountRoutes.updateAddress)
+app.get('/account/:user_id', accountRoutes.findAddress)

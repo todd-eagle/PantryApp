@@ -7,6 +7,7 @@ import RemoveFromCartButton from '../components/FormButton'
 import CheckOutButton from '../components/FormButton'
 import useOrders from '../hooks/useOrders'
 import UpdateQuantity from '../components/UpdateQuantity'
+import CheckoutNavRoutes from '../components/CheckoutNavRoutes'
 
 const CartScreen = ({navigation}) => {
     const {state, addOrder} = useContext(AuthContext)
@@ -30,6 +31,17 @@ useFocusEffect(
     useEffect(() => {
         isRemoved ? addOrder(orderList) : null
     }, [orderList, isRemoved])
+
+    const renderCheckoutButton = () => {
+        
+        if ( orderList.length !== 0 ){
+            return <CheckoutNavRoutes navigation={navigation}/>
+        }
+        else{
+            return <Text>Shopping Cart is empty.</Text>
+        }
+    
+    }
 
     return (
         <View style={styles.viewStyle}>
@@ -58,16 +70,13 @@ useFocusEffect(
                                     
                                 />     
                             </View>
-                           
+                            
                      </View>    
                      )
                  }}
             />
-                    <CheckOutButton
-                        buttonName = {'Check out'}
-                        onPress={()=>{navigation.navigate('Tabs', { screen:'Address'})}}
-                    />
-    
+                {renderCheckoutButton()}
+              
         </View>
     )
 }

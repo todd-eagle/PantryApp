@@ -26,7 +26,7 @@ module.exports = {
     getProduct: async(req, res) => {
         const db = req.app.get('db')
         try {
-            const data = await db.products.findOne(req.params,  req.bod)
+            const data = await db.products.findOne(req.params)
             return res.status(200).send(data)
         } catch (err) {
             return res.status(422).send(err)
