@@ -5,9 +5,11 @@ import FormButton from './FormButton'
 import useValidation from '../hooks/useFormValidation'
 import useAuth from '../hooks/useAuth'
 
-const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
+const AuthForm = ({headerText, buttonName, signup = false, errorMessage}) => {
 
-    const {signIn} = useAuth()
+    const {signIn, signUp} = useAuth()
+
+    console.log('Sign Up: ', signup)
 
     //////// Make seperate hook or functional component ///////
 
@@ -21,7 +23,7 @@ const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
     const Submit = () => {
         const {email, password} = values
         console.log(values)
-        signIn( {email, password})
+        !signup ? signIn( {email, password}) : signUp({email, password})
     }
 
     //////////////////////////////////////////////////////////////

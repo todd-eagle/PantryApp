@@ -41,6 +41,7 @@ const useAuth = () => {
             await AsyncStorage.setItem('token', response.data.token)
             await AsyncStorage.setItem('user_id', response.data.user_id)     
             await addUserId(response.data.user_id)
+
             navigateTo('Tabs','Store')
         } catch (err) {
             console.log('Signin Error: ', err )
@@ -50,7 +51,10 @@ const useAuth = () => {
     const signUp = async({email, password}) => {
         try {
             const response = await getResponseData('/signup/', {email, password})
+            console.log('response data: ', response.data)
             await dispatchToken(response.data.token)
+            await AsyncStorage.setItem('token', response.data.token)
+            await addUserId(response.data.user_id)
             
             navigateTo('Tabs','Store')
         } catch (err) {
