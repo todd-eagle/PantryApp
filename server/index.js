@@ -37,6 +37,7 @@ app.get('/products/:term', producthRoutes.getProductsBy)
 app.post('/cart/', orderRoutes.postToCart)
 app.put('/cart/:id', orderRoutes.updateCart)
 app.delete('/cart/:id', orderRoutes.deleteFromCart)
+app.get('/cart/:user_id', orderRoutes.retrieveCart)
 
 app.post('/account', accountRoutes.insertAddress)
 app.put('/account/:user_id', accountRoutes.updateAddress)

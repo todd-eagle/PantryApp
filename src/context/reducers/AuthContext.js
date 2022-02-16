@@ -38,6 +38,21 @@ const tryLocalSignin = (dispatch) => async () => {
     }
   }
 
+const dispatchToken = (dispatch) => async(token) => {
+    dispatch({ type: 'signin', payload: token })
+} 
+
+const addUserId = (dispatch) => async (userId) => {
+    dispatchUserId(dispatch, userId)
+}
+
+const dispatchError = (dispatch) => (error) => {
+  dispatch({
+    type: 'add_error',
+    payload: FORM.loginErr,
+  })
+}
+
 const signin = (dispatch) => async ({ email, password }) => {
     try {
       const response = await getResponseData('/signin', {email, password}, dispatch)
@@ -114,6 +129,6 @@ const addOrder = (dispatch) => async (item) => {
 
 export const {Provider, Context} = createContext(
     AuthReducer,
-    {signin, signup, signout, tryLocalSignin, clearErrorMessage, addOrder},
+    {signup, signout, dispatchToken, addUserId, dispatchError, clearErrorMessage, addOrder},
     {token: null, errorMessage: '', userId: null, cartOrders: null}
 )

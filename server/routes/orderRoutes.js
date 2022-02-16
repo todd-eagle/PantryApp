@@ -29,5 +29,15 @@ module.exports = {
             // console.log('deleteFromCart: ', err)
             return res.status(422).send(err)
         }
+    },
+    retrieveCart: async(req, res) => {
+        const db = req.app.get('db')
+        console.log('req.params: ', req.params)
+        try {
+            const data = await db.order_items.find(req.params)
+            return res.status(200).send(data)
+        } catch (err) {
+            return res.status(422).send(err)        
+        }
     }
 }

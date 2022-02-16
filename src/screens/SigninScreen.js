@@ -6,7 +6,7 @@ import SignInForm from '../components/AuthForm'
 
 const SigninScreen = () => {
 
-    const {state, signin} = useContext(AuthContext)
+    const {state} = useContext(AuthContext)
 
     return (
         <>
@@ -14,7 +14,6 @@ const SigninScreen = () => {
             headerText = 'Sign in to your account.' 
             buttonName = 'Sign In'
             errorMessage={state.errorMessage}
-            onSubmit = {signin}        
         />
         <NavLink
             text="Dont have an account? Sign up instead"

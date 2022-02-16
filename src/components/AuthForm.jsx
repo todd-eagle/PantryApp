@@ -3,9 +3,11 @@ import {Text, View} from 'react-native'
 import AuthView from './BaseForm'
 import FormButton from './FormButton'
 import useValidation from '../hooks/useFormValidation'
-
+import useAuth from '../hooks/useAuth'
 
 const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
+
+    const {signIn} = useAuth()
 
     //////// Make seperate hook or functional component ///////
 
@@ -19,7 +21,7 @@ const AuthForm = ({headerText, buttonName, signup, errorMessage, onSubmit}) => {
     const Submit = () => {
         const {email, password} = values
         console.log(values)
-        onSubmit( {email, password})
+        signIn( {email, password})
     }
 
     //////////////////////////////////////////////////////////////
