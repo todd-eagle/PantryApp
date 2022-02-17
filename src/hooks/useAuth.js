@@ -3,12 +3,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useContext } from 'react'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import {navigateResetRoot } from "../navigationRef"
+import {SERVER, FORM} from '../../server/consts/Messages'
+
 
 
 
 const useAuth = () => {
 
-    const {state, dispatchToken, dispatchError, addUserId} = useContext(AuthContext)
+    const {state, dispatchToken, dispatchItem, addUserId} = useContext(AuthContext)
 
     const tryLocalSignIn = async() => {
         const token = await AsyncStorage.getItem('token')
@@ -28,13 +30,12 @@ const useAuth = () => {
     const signIn = async({email, password}) => {
  
         try {
-            const response = await getResponseData('/signin', {email, password})
+            const response = await getResponseData('/signin/', {email, password})
             try {
                 const last_login = new Date(Date.now()).toISOString()
                 await authRoute.put(`/signin/${response.data.user_id}`,  {last_login})
-              } catch (error) {
+              } catch (err) {
                 console.log('authRoute Error: ', error )
-                dispatchError(err)
             }
 
             await dispatchToken(response.data.token)
@@ -45,6 +46,7 @@ const useAuth = () => {
             navigateTo('Tabs','Store')
         } catch (err) {
             console.log('Signin Error: ', err )
+            dispatchItem('add_error', SERVER.loginErr)
         }
     }
 
@@ -59,9 +61,14 @@ const useAuth = () => {
             navigateTo('Tabs','Store')
         } catch (err) {
             console.log('Signup Error: ', err)
-            dispatchError(err)
+            dispatchItem('add_error', SERVER.signupErr)
         }
+    }
 
+    const signOut = async() => {
+        await AsyncStorage.removeItem('token')
+        dispatchItem('signout')
+        navigateTo('Auth', 'Signin')
     }
 
     const navigateTo = (navigator, screen) => {
@@ -73,7 +80,7 @@ const useAuth = () => {
         return response
     }
 
-    return{tryLocalSignIn, signIn, signUp}
+    return{tryLocalSignIn, signIn, signUp, signOut}
 }
 
 export default useAuth;

@@ -26,17 +26,6 @@ const AuthReducer = (state, action) => {
     }
 }
 
-const tryLocalSignin = (dispatch) => async () => {
-    const token = await AsyncStorage.getItem('token')
-    if (token) {
-      dispatch({ type: 'signin', payload: token })
-      const user_id = await AsyncStorage.getItem('user_id')
-      dispatchUserId(dispatch, user_id)
-      navigateTo('Tabs','Store')
-    } else {
-      navigateTo('Auth','Signin')
-    }
-  }
 
 const dispatchToken = (dispatch) => async(token) => {
     dispatch({ type: 'signin', payload: token })
@@ -46,10 +35,10 @@ const addUserId = (dispatch) => async (userId) => {
     dispatchUserId(dispatch, userId)
 }
 
-const dispatchError = (dispatch) => (error) => {
+const dispatchItem = (dispatch) => (type, payload = '') => {
   dispatch({
-    type: 'add_error',
-    payload: FORM.loginErr,
+    type: type,
+    payload: payload
   })
 }
 
@@ -75,17 +64,17 @@ const signin = (dispatch) => async ({ email, password }) => {
   }
 
 const signup = (dispatch) => async({email, password}) => {
-   try {
-      const response = await getResponseData('/signin', {email, password}, dispatch)
-      // console.log('Response: ', response)
-      dispatch({type: 'signin', payload: response.data.token})
-      navigateTo('Tabs','Store')
-   } catch (err) {
-       console.log('Sign Up Error: ', err)
-       dispatch({
-           type: 'add_error', payload: FORM_ERR.emailErr
-       })
-   }
+  try {
+    const response = await getResponseData('/signin/', {email, password}, dispatch)
+    // console.log('Response: ', response)
+    dispatch({type: 'signin', payload: response.data.token})
+    navigateTo('Tabs','Store')
+  } catch (err) {
+      console.log('Sign Up Error: ', err)
+      dispatch({
+          type: 'add_error', payload: FORM_ERR.emailErr
+      })
+  }
 }
 
 const signout = (dispatch) => async () => {
@@ -129,6 +118,6 @@ const addOrder = (dispatch) => async (item) => {
 
 export const {Provider, Context} = createContext(
     AuthReducer,
-    {signup, signout, dispatchToken, addUserId, dispatchError, clearErrorMessage, addOrder},
+    {signout, dispatchToken, addUserId, dispatchItem, clearErrorMessage, addOrder},
     {token: null, errorMessage: '', userId: null, cartOrders: null}
 )

@@ -10,12 +10,12 @@
         pleaseSelectErr: 'Please select an option'
     }
 
-    const FORM = {
+    const SERVER = {
         signupErr: 'Something went wrong with sign up',
         signinErr: 'Something went wrong with sign in',
         loginErr: 'Email or password is incorrect'
     }
 
-    export  {FORM_ERR, FORM}
+    export  {FORM_ERR, SERVER}
 
 
