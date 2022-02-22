@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {Provider as AuthProvider} from './src/context/reducers/AuthContext'
+import {Provider as CartProvider} from './src/context/reducers/CartContext'
 import {navigationRef} from './src/navigationRef'
 
 //screens
@@ -88,12 +89,14 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <NavigationContainer ref={navigationRef}>
-       <Stack.Navigator headerMode = 'none'>
-         <Stack.Screen name = 'Auth' component = {AuthStackScreens} />
-         <Stack.Screen name = 'Tabs' component = {TabScreens}/>
-       </Stack.Navigator>
-      </NavigationContainer>
+      <CartProvider>
+        <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator headerMode = 'none'>
+          <Stack.Screen name = 'Auth' component = {AuthStackScreens} />
+          <Stack.Screen name = 'Tabs' component = {TabScreens}/>
+        </Stack.Navigator>
+        </NavigationContainer>
+      </CartProvider>  
     </AuthProvider>  
   )
 }

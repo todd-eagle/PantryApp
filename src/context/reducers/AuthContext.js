@@ -17,10 +17,6 @@ const AuthReducer = (state, action) => {
             return { ...state, errorMessage: '' }
         case 'add_userid':
             return {...state, userId: action.payload} 
-        ////// temporary addition ///////      
-        case 'add_to_cart':
-          // console.log('add_to_cart: ', action.payload)
-          return {...state, cartOrders: action.payload}    
         default:
             return state
     }
@@ -52,13 +48,8 @@ const dispatchUserId  =  (dispatch, user_id) => {
   
 }
 
-//////// Temporary additions /////////////
-const addOrder = (dispatch) => async (item) => {
-  dispatch({type: 'add_to_cart', payload: item})
-}
-
 export const {Provider, Context} = createContext(
     AuthReducer,
-    {dispatchToken, addUserId, dispatchItem, clearErrorMessage, addOrder},
+    {dispatchToken, addUserId, dispatchItem, clearErrorMessage},
     {token: null, errorMessage: '', userId: null, cartOrders: null}
 )
