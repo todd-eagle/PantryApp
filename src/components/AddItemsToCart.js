@@ -29,7 +29,7 @@ const AddItemsToCart = ({item, userId}) => {
     useEffect(() => {
         // console.log('Returned List: ', orderList)
        addOrder(orderList)
-         console.log('addOrder state: ++++++ ', state)
+        console.log('addOrder state: ++++++ ', state)
     }, [orderList, number])
 
     return (

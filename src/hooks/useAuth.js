@@ -14,6 +14,7 @@ const useAuth = () => {
 
     const tryLocalSignIn = async() => {
         const token = await AsyncStorage.getItem('token')
+        console.log("local token: ", token)
         if(token) {
             await dispatchToken(token)
             try {
@@ -56,6 +57,7 @@ const useAuth = () => {
             console.log('response data: ', response.data)
             await dispatchToken(response.data.token)
             await AsyncStorage.setItem('token', response.data.token)
+            await AsyncStorage.setItem('user_id', response.data.user_id)     
             await addUserId(response.data.user_id)
             
             navigateTo('Tabs','Store')
@@ -67,6 +69,7 @@ const useAuth = () => {
 
     const signOut = async() => {
         await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('user_id')
         dispatchItem('signout')
         navigateTo('Auth', 'Signin')
     }

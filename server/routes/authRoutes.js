@@ -14,8 +14,9 @@ module.exports = {
         try{
             const hash = bcryptjs.hashSync(password, bcryptjs.genSaltSync(15))
             const insertUser = await db.accounts.insert({user_name, email, password: hash})
+            const user_id = insertUser.user_id
             const token = jwt.sign(insertUser.user_id, JWT_SECRET_KEY)
-            res.send({token})
+            res.send({token, user_id})
         }catch(err){
             console.log('signup error: ',err)
             const errMsg = err.message.includes(DUPE.emailString) ? DUPE.emailMsg : 

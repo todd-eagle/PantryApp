@@ -59,6 +59,7 @@ const useOrders = (items = null) => {
             }
         } else {
             try {
+                console.log('++++++++++++++++++++ ', path,' ' ,orderItem)
                 response = await orderRoute.post(path, orderItem)
                 addToOrderList(response.data)
             } catch (err) {
