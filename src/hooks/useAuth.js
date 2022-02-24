@@ -3,14 +3,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useContext } from 'react'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import {navigateResetRoot } from "../navigationRef"
-import {SERVER, FORM} from '../../server/consts/Messages'
-
-
-
+import {SERVER} from '../../server/consts/Messages'
 
 const useAuth = () => {
 
-    const {state, dispatchToken, dispatchItem, addUserId} = useContext(AuthContext)
+    const {dispatchToken, dispatchItem, addUserId} = useContext(AuthContext)
 
     const tryLocalSignIn = async() => {
         const token = await AsyncStorage.getItem('token')
@@ -38,11 +35,7 @@ const useAuth = () => {
               } catch (err) {
                 console.log('authRoute Error: ', error )
             }
-
-            await dispatchToken(response.data.token)
-            await AsyncStorage.setItem('token', response.data.token)
-            await AsyncStorage.setItem('user_id', response.data.user_id)     
-            await addUserId(response.data.user_id)
+            setAuthData(response.data)
 
             navigateTo('Tabs','Store')
         } catch (err) {
@@ -55,11 +48,7 @@ const useAuth = () => {
         try {
             const response = await getResponseData('/signup/', {email, password})
             console.log('response data: ', response.data)
-            await dispatchToken(response.data.token)
-            await AsyncStorage.setItem('token', response.data.token)
-            await AsyncStorage.setItem('user_id', response.data.user_id)     
-            await addUserId(response.data.user_id)
-            
+            setAuthData(response.data)
             navigateTo('Tabs','Store')
         } catch (err) {
             console.log('Signup Error: ', err)
@@ -81,6 +70,13 @@ const useAuth = () => {
     const getResponseData = async (path, {email, password}) => {
         const response = await authRoute.post(path, {email, password})
         return response
+    }
+
+    const setAuthData = async(data) => {
+        await dispatchToken(data.token)
+        await AsyncStorage.setItem('token', data.token)
+        await AsyncStorage.setItem('user_id', data.user_id)     
+        await addUserId(data.user_id)
     }
 
     return{tryLocalSignIn, signIn, signUp, signOut}
