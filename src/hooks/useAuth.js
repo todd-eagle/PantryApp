@@ -1,13 +1,17 @@
 import authRoute from '../api/route'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
+import {Context as CartContext} from '../context/reducers/CartContext'
 import {navigateResetRoot } from "../navigationRef"
 import {SERVER} from '../../server/consts/Messages'
+import useOrders from './useOrders'
 
 const useAuth = () => {
 
     const {dispatchToken, dispatchItem, addUserId} = useContext(AuthContext)
+    const {clearOrder} = useContext(CartContext)
+    const {getOrderlist} = useOrders()
 
     const tryLocalSignIn = async() => {
         const token = await AsyncStorage.getItem('token')
@@ -17,7 +21,7 @@ const useAuth = () => {
             try {
                 const user_id = await AsyncStorage.getItem('user_id')
                 await addUserId(user_id)
-                
+                await getOrderlist(user_id, '/cart/')
                 navigateTo('Tabs','Store')
             } catch (err) {
                 console.log('Token retrieval error: ', err)
@@ -32,8 +36,9 @@ const useAuth = () => {
             try {
                 const last_login = new Date(Date.now()).toISOString()
                 await authRoute.put(`/signin/${response.data.user_id}`,  {last_login})
+                await getOrderlist(response.data.user_id, '/cart/')
               } catch (err) {
-                console.log('authRoute Error: ', error )
+                console.log('authRoute Error: ', err )
             }
             setAuthData(response.data)
 
@@ -59,6 +64,7 @@ const useAuth = () => {
     const signOut = async() => {
         await AsyncStorage.removeItem('token')
         await AsyncStorage.removeItem('user_id')
+        await clearOrder()
         dispatchItem('signout')
         navigateTo('Auth', 'Signin')
     }

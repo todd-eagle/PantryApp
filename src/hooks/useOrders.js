@@ -1,13 +1,16 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import orderRoute from '../api/route'
+import {Context as CartContext} from '../context/reducers/CartContext'
  
 const useOrders = (items = null) => {
     const [orderList, setOrderList] = useState ([])
     const [isRemoved, setIsRemoved] = useState(false)
+    const {addOrder} = useContext(CartContext)
+
 
     useEffect(() => {
         items ? setOrderList(items) : null
-        // console.log('useEffect OrderList: ', orderList)
+        console.log('useEffect OrderList: ', orderList)
     }, [items])
 
     const addItem = async(arrayObj, userId, number, isModified = false) => {   
@@ -84,7 +87,17 @@ const useOrders = (items = null) => {
         const modifiedOrdersList = [...newList]
         setOrderList(modifiedOrdersList)
         setIsRemoved(true)
+    }
 
+    const getOrderlist = async (userId, path) => {
+        const list = await orderRoute.get(path+userId)
+        addOrder(list.data)
+        console.log('getOrderList: ', list.data)
+        setOrderList(list.data)
+    }
+
+    const clearOrderList = () => {
+        setOrderList(null)
     }
 
     const isInOrderList = (order) => {
@@ -93,7 +106,7 @@ const useOrders = (items = null) => {
     }
 
 
-    return {addItem, removeOrder, orderList, isRemoved}
+    return {addItem, removeOrder, getOrderlist, orderList, isRemoved}
 }
 
 export default useOrders

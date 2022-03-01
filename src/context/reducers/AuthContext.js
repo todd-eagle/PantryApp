@@ -1,8 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import authRoute from '../../api/route'
 import createContext from '../createContext'
-import {FORM_ERR, FORM} from '../../../server/consts/Messages'
-import {navigateResetRoot } from "../../navigationRef"
 
 const AuthReducer = (state, action) => {
    // console.log("Action payload: ",action.payload)
@@ -21,7 +17,6 @@ const AuthReducer = (state, action) => {
             return state
     }
 }
-
 
 const dispatchToken = (dispatch) => async(token) => {
     dispatch({ type: 'signin', payload: token })

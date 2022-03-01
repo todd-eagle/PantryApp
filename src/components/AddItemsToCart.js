@@ -8,6 +8,7 @@ import useOrders from '../hooks/useOrders'
 import AddDeleteQuantity from './AddDeleteQuantity'
 import AddToCartButton from './FormButton'
 
+
 const AddItemsToCart = ({item, userId}) => {
     
     // const {state, addOrder} = useContext(AuthContext)
@@ -15,7 +16,9 @@ const AddItemsToCart = ({item, userId}) => {
     const {number, add, subtract, reset} = useCount(1)
     const {addItem, orderList} = useOrders(state.cartOrders)
 
+   
     // console.log('userId: ', userId)
+    // console.log('CartContext state: ', state)
 
     useFocusEffect(
         useCallback(() => {   
@@ -27,9 +30,11 @@ const AddItemsToCart = ({item, userId}) => {
     )   
 
     useEffect(() => {
-        // console.log('Returned List: ', orderList)
-       addOrder(orderList)
-        console.log('addOrder state: ++++++ ', state)
+    // console.log('Returned List: ', orderList)
+    console.log('orderList: ', orderList)
+    orderList.length === 0 ? addOrder( state.cartOrders) :  addOrder(orderList)
+    //    addOrder(orderList)
+        // console.log('addOrder state: ++++++ ', state)
     }, [orderList, number])
 
     return (
