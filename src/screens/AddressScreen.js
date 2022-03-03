@@ -13,7 +13,7 @@ const AddressScreen = () => {
             <VirtualizedContainer>
                 <AddressForm 
                     headerText={'Address Information'}
-                    buttonName = 'Payment'
+                    buttonName = 'Go to payment'
                     errorMessage={state.errorMessage}
                 />
             </VirtualizedContainer>     

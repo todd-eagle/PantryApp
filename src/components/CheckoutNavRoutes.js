@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState, useCallback} from 'react'
 import { View, Text} from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import useAccounts from '../hooks/useAccounts'
 import {Context as AuthContext} from '../context/reducers/AuthContext'
 import CheckOutButton from '../components/FormButton'
@@ -12,25 +13,30 @@ const CheckoutNavRoutes = ({navigation}) => {
 
     const {checkAddress} = useAccounts()
     const [navRoute, setNavRoute] = useState(null)
+    const [isSetAddress, setIsSetAddress] = useState(false)
 
     console.log('state: ', state)
+    console.log('isSetAddress: ', isSetAddress)
 
-    useEffect(() => {
-       renderButtonRoute()
-    }, [navRoute])
-  
-    const renderButtonRoute = async () => {
-    
-        console.log('renderButtonRoute activated/')
-        const address = await checkAddress('/account/', state.userId)
-        console.log('address: ',JSON.stringify(address))
+    useFocusEffect(
+    useCallback(()=> {
+        const renderButtonRoute = async () => {
 
-        if(Object.keys(address)===0){
-            setNavRoute('Address')
-        } else {
-            setNavRoute('Payment')
-        }
-    }
+            console.log('renderButtonRoute activated/')
+            const address = await checkAddress('/account/', state.userId)
+            console.log('address: ',address.city)
+
+            if(!address.city){
+                setNavRoute('Address')
+                setIsSetAddress(false)
+                } else {
+                    setNavRoute('Payment')
+                    setIsSetAddress(true)
+                }
+            }
+            renderButtonRoute()
+        }, [isSetAddress] )
+    )
 
     const renderButton = () =>{
         // const navRoute = renderButton()

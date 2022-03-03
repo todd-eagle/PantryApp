@@ -25,7 +25,7 @@ const useAccounts = () => {
     const checkAddress = async (path, id) => {
         try {
             const response = await accountRoute.get(path+id)
-            console.log('response: ', response.data)
+            // console.log('response: ', response.data)
             return response.data
         } catch (err) {
             console.log('Get address error: ', err)
