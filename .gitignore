@@ -56,5 +56,8 @@ web-build/
 # environment
 .env
 
+#data
+public.data.json
+
 # vscode
 .vscode/

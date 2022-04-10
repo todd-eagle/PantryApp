@@ -10,7 +10,7 @@ const useOrders = (items = null) => {
 
     useEffect(() => {
         items ? setOrderList(items) : null
-        console.log('useEffect OrderList: ', orderList)
+        // console.log('useEffect OrderList: ', orderList)
     }, [items])
 
     const addItem = async(arrayObj, userId, number, isModified = false) => {   
@@ -92,7 +92,7 @@ const useOrders = (items = null) => {
     const getOrderlist = async (userId, path) => {
         const list = await orderRoute.get(path+userId)
         addOrder(list.data)
-        console.log('getOrderList: ', list.data)
+        // console.log('getOrderList: ', list.data)
         setOrderList(list.data)
     }
 

@@ -15,8 +15,11 @@
     "@react-navigation/material-bottom-tabs": "^5.3.19",
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.9",
+    "@stripe/stripe-react-native": "0.1.4",
     "axios": "^0.23.0",
+    "babel-plugin-inline-dotenv": "^1.6.0",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "expo": "~42.0.1",
     "expo-splash-screen": "~0.11.2",
@@ -34,7 +37,8 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-unimodules": "~0.14.5",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "stripe": "^8.208.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

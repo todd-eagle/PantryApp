@@ -12,7 +12,7 @@ const CartReducer = (state, action) => {
     }
 }
 const addOrder = (dispatch) => async (item) => {
-    console.log('CartContext Item------: ', item)
+    // console.log('CartContext Item------: ', item)
     dispatch({type: 'add_to_cart', payload: item})
   }
 

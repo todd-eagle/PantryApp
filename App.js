@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { StyleSheet} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { StripeProvider } from '@stripe/stripe-react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {Provider as AuthProvider} from './src/context/reducers/AuthContext'
 import {Provider as CartProvider} from './src/context/reducers/CartContext'
+
 import {navigationRef} from './src/navigationRef'
 
 //screens
@@ -17,9 +19,11 @@ import CartScreen from './src/screens/CartScreen'
 import AddressScreen from './src/screens/AddressScreen'
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
 import PaymentScreen from './src/screens/PaymentScreen'
-
+import data from './public.data.json'
 
 const App = () => {
+
+  const publishableKey = data ? data.publishableKey : ''
 
   const Tabs = createBottomTabNavigator()
   const AuthStack = createStackNavigator()
@@ -86,16 +90,17 @@ const App = () => {
       <Tabs.Screen name = 'Payment' component = {PaymentStackScreen} options = {{ tabBarButton: () => null }}/>
     </Tabs.Navigator>
   )
-
   return (
     <AuthProvider>
       <CartProvider>
-        <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator headerMode = 'none'>
-          <Stack.Screen name = 'Auth' component = {AuthStackScreens} />
-          <Stack.Screen name = 'Tabs' component = {TabScreens}/>
-        </Stack.Navigator>
-        </NavigationContainer>
+        <StripeProvider publishableKey = {publishableKey}>
+          <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator headerMode = 'none'>
+            <Stack.Screen name = 'Auth' component = {AuthStackScreens} />
+            <Stack.Screen name = 'Tabs' component = {TabScreens}/>
+          </Stack.Navigator>
+          </NavigationContainer>
+        </StripeProvider>    
       </CartProvider>  
     </AuthProvider>  
   )
